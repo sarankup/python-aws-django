@@ -11,6 +11,7 @@ If you are familiar, you can symbol to Fast forward, if you are not clear, you c
 2. Git (GitHub, and BitBucket)
 Steps (for the first time)
 go to the project folder in the command prompt
+
 > git init
 > git remote set-url origin https://github.com/sarankup/python-aws-django.git
 > git add index.html
