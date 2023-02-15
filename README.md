@@ -7,11 +7,15 @@ If you are familiar, you can symbol to Fast forward, if you are not clear, you c
 
 # Table of contents
 
+```
 1. IDE (Visual Code Studio, ATOM, PyCharm)
 2. Git (GitHub, and BitBucket)
 Steps (for the first time)
 go to the project folder in the command prompt
+3. Python 3
+```
 
+```
 > git init
 > git remote set-url origin https://github.com/sarankup/python-aws-django.git
 > git add index.html
@@ -19,6 +23,7 @@ go to the project folder in the command prompt
 > git add *
 > git commit -m "this is my first commit - whatever"
 > git push origin master
+```
 
 After the first time
 > git commit -m "this is my 2nd commit - whatever"
@@ -37,6 +42,13 @@ After the first time
 5. EC2
 7. Integrations - SendGrid
 6. ElasticBeanstack
+
+
+Dynamodb CURD Procedure:
+1. Create DynamoDB table
+2. Create IAM group with DynamodbFullAccess Permission
+3. Create IAM User and assign the user to the group
+4. Write the python code do the 
 
 
 

@@ -4,7 +4,6 @@ def callKaran():
 def hello():
     print("hello")
 
-
 if __name__ == "__main__":
     hello()
     callKaran()
