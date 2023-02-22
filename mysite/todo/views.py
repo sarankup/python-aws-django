@@ -11,6 +11,9 @@ def add(request):
     context = { "total": (int(request.GET["a"])+int(request.GET["b"])) }
     return render(request, "math.html", context)
 
+def home(request):
+    return HttpResponse("You are seeing the home controller")
+
 
 
 def hello(request):

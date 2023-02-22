@@ -19,10 +19,13 @@ from todo import views
 from todo import todos
 
 urlpatterns = [
+    path('', views.home),
     path('admin/', admin.site.urls),
-    path('todo/', views.index, name='index'),
+    path('todo/', todos.index, name='index'),
+    path('todo/delete', todos.delete, name='index'),
     path('todo/add', views.add, name='index'),
     path('todo/hello', views.hello, name='index'),
     path('todo/karan', views.karan, name='index'),
     path('todo/karan-saran', todos.karan, name='index'),
+    path('todo/create', todos.create, name='index'),
 ]

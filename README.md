@@ -97,3 +97,12 @@ Day 7:
     Add contect variables
     
     ```
+
+Day 8:
+    Created a Todo application
+    Create a HTML path
+    Created a form to be able to create todo
+    Added font-awesome icon to delete todos
+
+
+    
