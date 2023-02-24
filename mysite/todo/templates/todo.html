@@ -4,9 +4,12 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/all.min.js" integrity="sha512-2bMhOkE/ACz21dJT8zBOMgMecNxx0d37NND803ExktKiKdSzdwn+L7i9fdccw/3V06gM/DBWKbYmQvKMdAA9Nw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <title>Hello, world!</title>
     <script type="text/javascript">
       function deleteById(id)
@@ -18,12 +21,20 @@
   <body>
     <section style="max-width:1024px;margin-left:auto;margin-right:auto">
     <h1>My Todos</h1>
-    <div class="alert alert-primary" role="alert">
-      {% for todo in todos  %}
-        <p><button type="button" onclick="deleteById('{{todo.id}}')" class="btn btn-link"><i class="fa fa-trash" aria-hidden="true"></i></button> {{todo.name}}</p>
-      {% endfor %}
+    <div>
+      <table class="table table-striped">
+        <thead>
+          <tr><th>Todo</th><th>Target Date</th><th>Delete</th></tr>
+        </thead>
+        <tbody>
+          {% for todo in todos  %}
+          <tr><td>{{todo.name}}</td><td>{{todo.target_date}}</td><td><button type="button" onclick="deleteById('{{todo.id}}')" class="btn btn-link"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
 
+    <div style="border:2px solid teal;max-width:500px;padding:10px 10px 10px 10px;border-radius: 10px;">
     <form method="post" action="/todo/create">
       {% csrf_token %}
       <div class="form-group">
@@ -31,13 +42,29 @@
         <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp" placeholder="Enter Todo">
         <small id="emailHelp" class="form-text text-muted">Enter the todo name </small>
       </div>
+      <div class="form-group">
+        <div id="datepicker" 
+             class="input-group date" 
+             data-date-format="mm-dd-yyyy">
+            <input class="form-control"  type="text" readonly name="target_date"/>
+            <span class="input-group-addon"> <i class="glyphicon glyphicon-calendar"></i> </span>
+        </div>
+      </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+  </div>
   </section>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
+  <script type="text/javascript">
+    $(function () {
+      $("#datepicker").datepicker({ 
+        autoclose: true, 
+        todayHighlight: true,
+    }).datepicker('update', new Date());
+    });
+ </script>
 </html>

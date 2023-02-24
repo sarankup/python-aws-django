@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from todo import views
 from todo import todos
+from photo import photo
+
 
 urlpatterns = [
     path('', views.home),
@@ -28,4 +30,7 @@ urlpatterns = [
     path('todo/karan', views.karan, name='index'),
     path('todo/karan-saran', todos.karan, name='index'),
     path('todo/create', todos.create, name='index'),
+    path('photos/', photo.index, name='index'),
+    path('photos/create', photo.create, name='index'),
+    
 ]

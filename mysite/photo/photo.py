@@ -6,6 +6,7 @@ from datetime import date
 from boto3.dynamodb.conditions import Key
 import uuid
 from django.shortcuts import redirect
+import tempfile
 
 
 
@@ -13,14 +14,18 @@ from django.shortcuts import redirect
 #https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html
 def connect():
     dynamoClient = boto3.resource("dynamodb", region_name="us-east-1", aws_access_key_id='', aws_secret_access_key='')
-    dynamoDbTable = dynamoClient.Table("todo")
+    dynamoDbTable = dynamoClient.Table("photos")
     return dynamoDbTable
+
+def connects3():
+    mys3Obj = boto3.resource("s3", region_name="us-east-1", aws_access_key_id='', aws_secret_access_key='')
+    return mys3Obj
 
 
 def index(request):
     dynamoDbTable = connect()
     response = dynamoDbTable.scan()
-    return render(request, "todo.html", {"todos": response["Items"] })
+    return render(request, "photo.html", {"photos": response["Items"] })
 
 '''
 This method read record(s) by query using the partion key
@@ -49,14 +54,18 @@ def delete(request):
     return redirect('/todo')
 
 
-
-
-
 def karan(request):
     return HttpResponse("Hello Karan Saran")
 
 
 def create(request):
-    dynamoDbTable = connect()
-    context = dynamoDbTable.put_item(Item={"id": str(uuid.uuid4()), "target_date": request.POST.get("target_date", ""), 'name': request.POST.get("name", "")})
-    return redirect('/todo')
+    if request.method == 'POST' and request.FILES['file']:
+        uploadedFile = request.FILES['file']
+        with open(tempfile.gettempdir()+"/"+uploadedFile.name, 'wb+') as destination:  
+            for chunk in uploadedFile.chunks():
+                destination.write(chunk)
+        s3Obj = connects3()
+        dynamoDb = connect()
+        s3Obj.Bucket('saran-myfiles').upload_file(tempfile.gettempdir()+"/"+uploadedFile.name, uploadedFile.name, ExtraArgs={'ACL':'public-read'})
+        context = dynamoDb.put_item(Item={"id": str(uuid.uuid4()), "file_name": uploadedFile.name, "active": True})
+        return redirect('/photos')

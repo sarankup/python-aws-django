@@ -105,4 +105,6 @@ Day 8:
     Added font-awesome icon to delete todos
 
 
+Day 9:
+    Django, python, AWS DyanmoDb and S3
     
